@@ -4,9 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-m2r = "*"
 
 [packages]
+m2r = "*"
 pytest = "*"
 
 [requires]
