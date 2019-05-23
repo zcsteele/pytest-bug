@@ -8,6 +8,6 @@ python:
 install:
   - pip install pipenv
   - pipenv install --system
-  - python setup.py install
+  - pipenv install -e . --system
 script:
   - pytest ./test
