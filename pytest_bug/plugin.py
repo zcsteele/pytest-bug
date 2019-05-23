@@ -2,7 +2,7 @@ import enum
 
 import pytest
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 BUG = '_mark_bug'
 
