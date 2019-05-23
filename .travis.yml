@@ -10,5 +10,6 @@ virtualenv:
 install:
   - pip install m2r
   - pip install pytest==$PYTEST_VERSION
+  - python setup.py install
 script:
   - pytest ./test
