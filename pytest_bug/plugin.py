@@ -1,9 +1,8 @@
 import enum
-from typing import Tuple
 
 import pytest
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 BUG = '_mark_bug'
 
@@ -15,7 +14,7 @@ class MARKS(enum.Enum):
     UNKNOWN = 'u'
 
 
-def bug_mark(*args, run: bool = False, **kwargs) -> Tuple[str, bool]:
+def bug_mark(*args, run=False, **kwargs):
     com = [str(i) for i in args]
     com.extend(str(i) for i in kwargs.values())
     return ', '.join(com), run
@@ -76,5 +75,6 @@ class PyTestBug:
 
     def pytest_terminal_summary(self, terminalreporter):
         terminalreporter.write_sep(
-            '-', f'Bugs skipped: {self._skipped}, Bugs passed: {self._passed}, Bugs failed: {self._failed}'
+            '-',
+            'Bugs skipped: {0}, Bugs passed: {1}, Bugs failed: {2}'.format(self._skipped, self._passed, self._failed)
         )

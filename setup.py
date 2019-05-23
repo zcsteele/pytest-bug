@@ -14,7 +14,7 @@ setup(
     packages=['pytest_bug'],
     install_requires=['pytest>=3.6.0'],
     include_package_data=True,
-    python_requires='>=3.6',
+    python_requires='>=3.4',
     license='MIT License',
     entry_points={'pytest11': ['pytest_bug = pytest_bug.conftest']},
     keywords=['pytest'],
@@ -25,6 +25,8 @@ setup(
         'Operating System :: OS Independent',
         'Framework :: Pytest',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Topic :: Software Development :: Testing'
