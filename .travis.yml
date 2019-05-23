@@ -5,9 +5,10 @@ python:
   - "3.5"
   - "3.6"
   - "3.7"
+virtualenv:
+  system_site_packages: true
 install:
-  - pip install pipenv
-  - pipenv install
-  - pipenv install -e .
+  - pip install m2r
+  - pip install pytest==$PYTEST_VERSION
 script:
   - pytest ./test
