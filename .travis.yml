@@ -7,7 +7,7 @@ python:
   - "3.7"
 install:
   - pip install pipenv
-  - pipenv install --system
-  - pipenv install -e . --system
+  - pipenv install
+  - pipenv install -e .
 script:
   - pytest ./test
