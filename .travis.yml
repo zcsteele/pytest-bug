@@ -3,11 +3,9 @@ language: python
 python:
   - "3.6"
   - "3.7"
-# command to install dependencies
 install:
   - pip install pytest
   - pip install m2r
   - python setup.py install
-# command to run tests
 script:
   - pytest ./test
