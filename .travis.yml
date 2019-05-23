@@ -6,6 +6,7 @@ python:
 install:
   - pip install pipenv
   - pipenv install --system
+  - python setup.py install
 # command to run tests
 script:
   - pytest ./test
