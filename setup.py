@@ -12,7 +12,7 @@ setup(
     author_email='tolstislon@gmail.com',
     url='https://github.com/tolstislon/pytest-bug',
     packages=['pytest_bug'],
-    install_requires=['pytest>=4.5.0'],
+    install_requires=['pytest>=3.6.0'],
     include_package_data=True,
     python_requires='>=3.6',
     license='MIT License',
