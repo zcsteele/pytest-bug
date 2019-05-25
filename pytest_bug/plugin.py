@@ -2,7 +2,7 @@ import enum
 
 import pytest
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 BUG = '_mark_bug'
 
@@ -74,7 +74,12 @@ class PyTestBug:
             return report.outcome, mark.value, report.outcome.upper()
 
     def pytest_terminal_summary(self, terminalreporter):
-        terminalreporter.write_sep(
-            '-',
-            'Bugs skipped: {0}, Bugs passed: {1}, Bugs failed: {2}'.format(self._skipped, self._passed, self._failed)
-        )
+        text = []
+        if self._skipped:
+            text.append('Bugs skipped: %d' % self._skipped)
+        if self._passed:
+            text.append('Bugs passed: %d' % self._passed)
+        if self._failed:
+            text.append('Bugs failed: %d' % self._failed)
+        if text:
+            terminalreporter.write_sep('-', ' '.join(text))
