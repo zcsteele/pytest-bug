@@ -5,6 +5,21 @@
 ![pytes_support](https://img.shields.io/badge/pytest-3.6.0%20%2B-blue.svg)
 
 
-#### requirements
-* python 3.4+
-* pytest 3.6.0+
+```python
+import pytest
+
+@pytest.mark.bug('fail not calling exit code', run=True)
+def test_one():
+    assert False
+
+```
+
+or
+
+```python
+from pytest_bug import bug
+
+@bug('fail not calling exit code', run=True)
+def test_one():
+    assert False
+```
