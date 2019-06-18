@@ -1,8 +1,6 @@
 dist: xenial
 language: python
 python:
-  - "3.4"
-  - "3.5"
   - "3.6"
   - "3.7"
 install:
@@ -10,4 +8,4 @@ install:
   - pip install pytest==$PYTEST_VERSION
   - python setup.py install
 script:
-  - pytest ./test
+  - pytest
