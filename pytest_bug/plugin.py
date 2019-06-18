@@ -3,7 +3,7 @@ import enum
 import pytest
 from . import hooks
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 BUG = '_mark_bug'
 COMMENT = '_bug_comment'
