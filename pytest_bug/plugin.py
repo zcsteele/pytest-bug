@@ -1,8 +1,9 @@
 import enum
 
 import pytest
+from . import hooks
 
-__version__ = '0.1.3'
+__version__ = '0.2.0'
 
 BUG = '_mark_bug'
 COMMENT = '_bug_comment'
@@ -45,12 +46,18 @@ class PyTestBug:
     def set_comment(obj, comment):
         setattr(obj, COMMENT, 'BUG: %s' % str(comment))
 
+    @staticmethod
+    def pytest_addhooks(pluginmanager):
+        pluginmanager.add_hookspecs(hooks)
+
     def pytest_runtest_setup(self, item):
         for i in item.iter_markers(name='bug'):
             comment, run = bug_mark(*i.args, **i.kwargs)
             self.set_comment(item, comment)
             if run:
+                self.config.hook.pytest_bug_run_before_set_mark(item=item, config=self.config)
                 self.set_mark(item)
+                self.config.hook.pytest_bug_run_after_set_mark(item=item, config=self.config)
             else:
                 self.set_mark(item, MARKS.SKIP)
                 pytest.skip(comment)
