@@ -5,7 +5,7 @@ import pytest_bug
 
 setup(
     name='pytest-bug',
-    description='pytest plugin for interaction with TestRail',
+    description='Pytest plugin Mark test as a bug',
     long_description=parse_from_file('README.md'),
     version=pytest_bug.__version__,
     author='tolstislon',
