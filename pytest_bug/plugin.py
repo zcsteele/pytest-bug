@@ -3,7 +3,7 @@ import enum
 import pytest
 from . import hooks
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 BUG = '_mark_bug'
 COMMENT = '_bug_comment'
@@ -44,7 +44,8 @@ class PyTestBug:
 
     @staticmethod
     def set_comment(obj, comment):
-        setattr(obj, COMMENT, 'BUG: %s' % str(comment))
+        if comment:
+            setattr(obj, COMMENT, 'BUG: %s' % str(comment))
 
     @staticmethod
     def pytest_addhooks(pluginmanager):
