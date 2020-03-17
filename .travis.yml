@@ -2,25 +2,34 @@ dist: xenial
 language: python
 
 env:
-  - $PYTEST_VERSION=3.6.0  # min version
-  - $PYTEST_VERSION=4.6.9
-  - $PYTEST_VERSION=5.3.5
-  - $PYTEST_VERSION=5.4.1  # last version
+  global:
+    - LAST_PYTEST_VERSION=5.4.1
+  jobs:
+    - PYTEST_VERSION=3.6.0  # min version
+    - PYTEST_VERSION=4.6.9
+    - PYTEST_VERSION=5.3.5
+    - PYTEST_VERSION=$LAST_PYTEST_VERSION
+
 python:
   - "3.6"
   - "3.7"
   - "3.8"
 install:
   - pip install m2r==0.2.1
+  - pip install twine==3.1.1
   - pip install pytest==$PYTEST_VERSION
   - python setup.py install
 script:
+  - python setup.py bdist_wheel
   - pytest
 deploy:
   provider: pypi
   user: $PYPI_USER
   password: $PYPI_PASSWORD
   skip_existing: true
+  skip_cleanup: true
   on:
     tags: true
+    repo: tolstislon/pytest-bug
     python: "3.8"
+    condition: $PYTEST_VERSION == $LAST_PYTEST_VERSION
