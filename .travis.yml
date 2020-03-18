@@ -15,22 +15,25 @@ python:
   - "3.7"
   - "3.8"
 install:
-  - pip install m2r==0.2.1
-  - pip install twine==3.1.1
-  - pip install pytest==$PYTEST_VERSION
-  - python setup.py install
+  - pip install pipenv
+  - pipenv install pytest==$PYTEST_VERSION
+  - pipenv install pytest-cov==2.8.1
+  - pipenv install -e .
 script:
-  - python setup.py bdist_wheel
-  - pytest
+  - pytest ./tests
 deploy:
   provider: pypi
   user: $PYPI_USER
   password: $PYPI_PASSWORD
   skip_existing: true
-  skip_cleanup: true
-  distributions: "twine upload dist/*"
+  distributions: bdist_wheel --universal
   on:
     tags: true
     repo: tolstislon/pytest-bug
     python: "3.8"
     condition: $PYTEST_VERSION == $LAST_PYTEST_VERSION
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
