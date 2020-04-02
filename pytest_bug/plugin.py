@@ -5,11 +5,16 @@ import pytest
 from . import hooks
 
 MARK_BUG = "_mark_bug"
+START_COMMENT = "BUG: "
 
 
 class MarkBug:
     def __init__(self, comment="no comment", run=False):
-        self.comment = "BUG: {}".format(comment)
+        """
+        :param comment: str
+        :param run: bool
+        """
+        self.comment = "{}{}".format(START_COMMENT, comment)
         self.run = run
 
 
@@ -153,6 +158,9 @@ class PyTestBug:
         self._all_skip = config.getoption("--bug-all-skip")
 
     def _counter(self, mark):
+        """
+        :param mark: Sub object ReportBug
+        """
         if isinstance(mark, SkipBug):
             self._skipped += 1
         elif isinstance(mark, FailBug):
@@ -161,6 +169,10 @@ class PyTestBug:
             self._passed += 1
 
     def _bug_mark(self, *args, run=False, **kwargs):
+        """
+        :param run: bool
+        :return: Tuple[str, bool]
+        """
         comment = [str(i) for i in args]
         comment.extend("{}={}".format(key, value) for key, value in kwargs.items())
         if self._all_run:
@@ -223,7 +235,7 @@ class PyTestBug:
             for item in items:
                 mark_bug = getattr(item, MARK_BUG, None)
                 if mark_bug is not None:
-                    comment = mark_bug.comment[5:]
+                    comment = mark_bug.comment[len(START_COMMENT):]
                     if re.search(bug_pattern, comment, re.I):
                         selected_items.append(item)
             config.hook.pytest_deselected(
@@ -249,8 +261,7 @@ class PyTestBug:
                 if report.passed:
                     setattr(report, MARK_BUG, PassBug(mark_bug.comment))
                 elif report.failed:
-                    report.outcome = "skipped"
-                    report.wasxfail = "skipped"
+                    report.outcome, report.wasxfail = ("skipped", "skipped")
                     setattr(report, MARK_BUG, FailBug(mark_bug.comment))
 
     def pytest_report_teststatus(self, report):
@@ -263,9 +274,8 @@ class PyTestBug:
             return report.outcome, mark_bug.letter, (mark_bug.word, mark_bug.markup)
 
     def pytest_terminal_summary(self, terminalreporter):
-        if not self.config.getoption("--bug-no-stats") and self.config.getini(
-                "bug_summary_stats"
-        ):
+        if (not self.config.getoption("--bug-no-stats") and
+                self.config.getini("bug_summary_stats")):
             text = []
             if self._skipped:
                 text.append("Bugs skipped: {}".format(self._skipped))

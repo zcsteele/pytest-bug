@@ -1,17 +1,16 @@
-from setuptools import setup, find_packages
-from os import path
-import pytest_bug
+from pathlib import Path
 
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+from setuptools import find_packages, setup
+
+readme_file = Path(__file__).parent.absolute().joinpath('README.md')
+with readme_file.open(encoding='utf-8') as file:
+    long_description = file.read()
 
 setup(
     name='pytest-bug',
     description='Pytest plugin Mark test as a bug',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    # version=pytest_bug.__version__,
     author='tolstislon',
     author_email='tolstislon@gmail.com',
     url='https://github.com/tolstislon/pytest-bug',
@@ -25,7 +24,7 @@ setup(
     entry_points={'pytest11': ['pytest_bug = pytest_bug.plugin']},
     keywords=['pytest'],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
@@ -35,6 +34,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
-        'Topic :: Software Development :: Testing'
+        'Topic :: Software Development :: Testing',
+        'Topic :: Software Development :: Quality Assurance',
     ]
 )
