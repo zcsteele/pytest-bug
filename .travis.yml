@@ -10,9 +10,6 @@ env:
 git:
   depth: false
 
-git:
-  depth: false
-
 python:
   - "pypy3"
   - "3.5"
@@ -40,9 +37,6 @@ deploy:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
 
 
 notifications:
