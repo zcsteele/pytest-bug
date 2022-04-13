@@ -15,14 +15,14 @@ class MarkBug:
         :param comment: str
         :param run: bool
         """
-        self.comment = "{}{}".format(START_COMMENT, comment)
+        self.comment = f"{START_COMMENT}{comment}"
         self.run = run
 
 
 class ReportBug:
-    letter = "u"  # type: str
-    word = "BUG-UNKNOWN"  # type:str
-    markup = {}  # type: Dict[str, bool]
+    letter: str = "u"
+    word: str = "BUG-UNKNOWN"
+    markup: Dict[str, bool] = {}
 
     def __init__(self, comment):
         self.comment = comment
@@ -178,7 +178,7 @@ class PyTestBug:
         :return: Tuple[str, bool]
         """
         comment = [str(i) for i in args]
-        comment.extend("{}={}".format(key, value) for key, value in kwargs.items())
+        comment.extend(f"{key}={value}" for key, value in kwargs.items())
         if self._all_run:
             run = True
         elif self._all_skip:
@@ -240,7 +240,7 @@ class PyTestBug:
             for item in items:
                 mark_bug = getattr(item, MARK_BUG, None)
                 if mark_bug is not None:
-                    comment = mark_bug.comment[len(START_COMMENT):]
+                    comment = mark_bug.comment[len(START_COMMENT) :]
                     if re.search(bug_pattern, comment, re.I):
                         selected_items.append(item)
             config.hook.pytest_deselected(
@@ -284,10 +284,10 @@ class PyTestBug:
         ):
             text = []
             if self._skipped:
-                text.append("Bugs skipped: {}".format(self._skipped))
+                text.append(f"Bugs skipped: {self._skipped}")
             if self._passed:
-                text.append("Bugs passed: {}".format(self._passed))
+                text.append(f"Bugs passed: {self._passed}")
             if self._failed:
-                text.append("Bugs failed: {}".format(self._failed))
+                text.append(f"Bugs failed: {self._failed}")
             if text:
                 terminalreporter.write_sep("-", " ".join(text))
