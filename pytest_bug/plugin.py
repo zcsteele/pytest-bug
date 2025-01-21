@@ -238,7 +238,7 @@ class PyTestBug:
                 if report.passed:
                     setattr(report, MARK_BUG, PassBug(mark_bug.comment))
                 elif report.failed:
-                    report.outcome, report.wasxfail = ("skipped", "skipped")
+                    report.outcome, report.wasxfail = ("failed", mark_bug.comment)
                     setattr(report, MARK_BUG, FailBug(mark_bug.comment))
 
     def pytest_report_teststatus(self, report: TestReport):

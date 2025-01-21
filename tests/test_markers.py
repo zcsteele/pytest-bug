@@ -46,7 +46,7 @@ def test_mark_func_and_class(testdir, test_import, test_mark):
     )
     result = testdir.runpytest()
     assert result.ret == 0
-    result.assert_outcomes(passed=2, skipped=5)
+    result.assert_outcomes(passed=2, skipped=3, failed=2)
     stdout = result.stdout.str()
     assert re.search(r'\w+\.py bfpbbfp', stdout)
     assert re.search(r'-\sBugs skipped: 3 Bugs passed: 2 Bugs failed: 2\s-', stdout)
@@ -92,7 +92,7 @@ def test_mark_module_run_true(testdir, test_import, test_mark):
     )
     result = testdir.runpytest()
     assert result.ret == 0
-    result.assert_outcomes(skipped=1, passed=1)
+    result.assert_outcomes(passed=1, failed=1)
     stdout = result.stdout.str()
     assert re.search(r'\w+\.py fp', stdout)
     assert re.search(r'-\sBugs passed: 1 Bugs failed: 1\s-', stdout)

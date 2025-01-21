@@ -41,7 +41,7 @@ def test_func_and_class(testdir):
     )
     result = testdir.runpytest('-v')
     assert result.ret == 0
-    result.assert_outcomes(passed=2, skipped=5)
+    result.assert_outcomes(passed=2, skipped=3, failed=2)
     stdout = result.stdout.str()
     assert re.search(r'\w+\.py::test_one BUG-SKIP', stdout)
     assert re.search(r'\w+\.py::test_two BUG-FAIL', stdout)
@@ -69,7 +69,7 @@ def test_module_run_true(testdir):
     )
     result = testdir.runpytest('-v')
     assert result.ret == 0
-    result.assert_outcomes(skipped=1, passed=1)
+    result.assert_outcomes(failed=1, passed=1)
     stdout = result.stdout.str()
     assert re.search(r'\w+\.py::test_one BUG-FAIL', stdout)
     assert re.search(r'\w+\.py::test_two BUG-PASS', stdout)

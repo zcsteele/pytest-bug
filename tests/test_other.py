@@ -168,7 +168,7 @@ def test_run_all_bugs(testdir):
         """
     )
     result = testdir.runpytest('--bug-all-run')
-    result.assert_outcomes(skipped=1, passed=1, failed=1)
+    result.assert_outcomes(skipped=0, passed=1, failed=2)
     stdout = result.stdout.str()
     assert re.search(r'-\sBugs passed: 1 Bugs failed: 1\s-', stdout)
 
