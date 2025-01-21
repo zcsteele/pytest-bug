@@ -233,6 +233,13 @@ class PyTestBug:
         report = outcome.get_result()
         if isinstance(mark_bug := getattr(item, MARK_BUG, None), MarkBug):
             if report.skipped:
+                # If a test case is marked as 'xfail', report.longrepr contains an
+                # 'ExceptionChainRepr' object instead of a tuple.  To resolve this,
+                # we can extract the contents of the tuple and rebuild the data pytest
+                # needs in the final report
+                if type(report.longrepr) is not tuple:
+                    crash = report.longrepr.reprcrash
+                    report.longrepr = (crash.path, crash.lineno, crash.message)
                 setattr(report, MARK_BUG, SkipBug(mark_bug.comment))
             elif report.when == "call":
                 if report.passed:

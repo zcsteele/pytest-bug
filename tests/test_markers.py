@@ -96,3 +96,24 @@ def test_mark_module_run_true(testdir, test_import, test_mark):
     stdout = result.stdout.str()
     assert re.search(r'\w+\.py fp', stdout)
     assert re.search(r'-\sBugs passed: 1 Bugs failed: 1\s-', stdout)
+
+
+@pytest.mark.parametrize('test_import, test_mark', PARAMETRIZE)
+def test_mark_module_expected_failure(testdir, test_import, test_mark):
+    testdir.makepyfile(
+        f"""
+        {test_import}
+        import pytest
+
+        @pytest.mark.xfail
+        @{test_mark}bug('fail', run=True)
+        def test_one():
+            assert False
+        """
+    )
+    result = testdir.runpytest()
+    assert result.ret == 0
+    result.assert_outcomes(skipped=1)
+    stdout = result.stdout.str()
+    assert re.search(r'\w+\.py b', stdout)
+    assert re.search(r'-\sBugs skipped: 1\s-', stdout)
